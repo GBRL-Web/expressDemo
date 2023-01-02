@@ -1,0 +1,25 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node ./dist/app.js",
+    "build" : "tsc",
+    "start:dev" : "ts-node-dev ./src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "main"
+  },
+  "author": "GBRL",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.18",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "ts-node-dev": "^2.0.0"
+  }
+}
