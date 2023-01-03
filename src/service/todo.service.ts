@@ -21,4 +21,9 @@ export default class TodoService {
         this.repo.deleteById(id);
         return `Repo deleted successfully.`
      }
+
+     createNew = (str:string) => {
+        const todo = new TodoModel(str);
+        this.repo.createNew(todo);
+     }
 }

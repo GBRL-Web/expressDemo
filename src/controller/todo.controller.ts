@@ -27,7 +27,13 @@ export default class TodoController {
     if (todo) {
       res.send(this.service.deleteById(id));
     } else {
-      res.send(`ToDo entry can not be deleted. It is non-existent.`)
+      res.send(`ToDo entry can not be deleted. It is non-existent.`);
     }
-  }
+  };
+  createNew = (req: Request, res: Response): void => {
+    const str: string = (req.body.text);
+    // console.log(req.body.text);
+    this.service.createNew(str);
+    res.sendStatus(200);
+  };
 }

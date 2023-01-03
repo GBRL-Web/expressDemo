@@ -18,4 +18,7 @@ export default class TodoRepository {
       return obj.id != id;
     });
   };
+  createNew = (todo: TodoModel): void => {
+    this.todos.push(todo);
+  };
 }

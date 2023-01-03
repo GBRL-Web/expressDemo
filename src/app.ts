@@ -5,6 +5,8 @@ import "dotenv/config"; // import the dotenv library, which loads environment va
 const app = express(); // create an instance of the express app
 const port = process.env.PORT; // retrieve the value of the PORT environment variable
 
+app.use(express.json()); // use the express json library
+app.use(express.urlencoded({ extended: true }))// use the express urlencoded library
 app.use("/todo", router); // use the router for all requests that start with "/todo"
 
 // start the server and listen for incoming requests on the specified port
