@@ -2,7 +2,7 @@ export default class TodoModel {
     id: number
     task: string
     completed:boolean
-    static count:number = 0;
+    static count:number = 1;
 
 
     constructor(task:string) {

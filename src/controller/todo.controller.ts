@@ -21,4 +21,13 @@ export default class TodoController {
       res.send("ToDo entry non-existent!");
     }
   };
+  deleteById = (req: Request, res: Response): void => {
+    const id: number = parseInt(req.params.id);
+    const todo: TodoModel = this.service.getById(id);
+    if (todo) {
+      res.send(this.service.deleteById(id));
+    } else {
+      res.send(`ToDo entry can not be deleted. It is non-existent.`)
+    }
+  }
 }

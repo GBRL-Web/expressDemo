@@ -11,5 +11,6 @@ const controller = new TodoController(service);
 const router = express.Router();
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
+router.delete("/:id", controller.deleteById);
 
 export default router;

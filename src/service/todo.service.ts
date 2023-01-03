@@ -16,4 +16,9 @@ export default class TodoService {
     getById = (id:number) => {
         return this.repo.getById(id);
      }
+
+     deleteById = (id:number) => { 
+        this.repo.deleteById(id);
+        return `Repo deleted successfully.`
+     }
 }
