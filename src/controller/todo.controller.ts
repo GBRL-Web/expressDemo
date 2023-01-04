@@ -31,9 +31,46 @@ export default class TodoController {
     }
   };
   createNew = (req: Request, res: Response): void => {
-    const str: string = (req.body.text);
-    // console.log(req.body.text);
-    this.service.createNew(str);
+    const todo = new TodoModel(req.body.text);
+    this.service.createNew(todo);
     res.sendStatus(200);
   };
+  editTodo = (req: Request, res: Response): void => {
+    const index: number = parseInt(req.params.id);
+    let newMod: TodoModel = new TodoModel(req.body.task);
+    newMod.id = index;
+    newMod.completed = req.body.completed;
+    if (this.service.getById(index)) {
+      this.service.editTodo(index, newMod);
+      res.send('Edited successfully!')
+    } else {
+      this.service.createNew(newMod);
+      res.sendStatus(200);
+    }
+   }
+   editTodoPatched = (req: Request, res: Response): void => { 
+    const index: number = parseInt(req.params.id);
+    const body = req.body;
+    let todo : TodoModel;
+    if (this.service.getById(index)) {
+      todo = this.service.getById(index);
+    } else {
+      throw new Error('No such entry found!');
+    }
+    if (body.task !== undefined) {
+      todo.task = body.task;
+      console.log('Body task set.')
+    } else {
+      console.log('No task text found!')
+    }
+    if (body.completed !== undefined) {
+      todo.completed = body.completed;
+      console.log('Completed set!')
+    } else {
+      todo.completed = todo.completed;
+      console.log('No completed found.')
+    }
+    this.service.editTodo(index, todo);
+    res.sendStatus(200);
+   }
 }

@@ -13,5 +13,7 @@ router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
 router.delete("/:id", controller.deleteById);
 router.post("/", controller.createNew);
+router.put("/:id", controller.editTodo);
+router.patch("/:id", controller.editTodoPatched);
 
 export default router;

@@ -21,4 +21,9 @@ export default class TodoRepository {
   createNew = (todo: TodoModel): void => {
     this.todos.push(todo);
   };
+  editTodo = (index: number ,todo: TodoModel): void => {
+    this.todos[this.todos.findIndex((t) => t.id === index)] = todo;
+    console.log(this.todos);
+    console.log(this.todos.indexOf(this.todos[index]));
+  }
 }
