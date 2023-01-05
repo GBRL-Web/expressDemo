@@ -3,7 +3,7 @@ import 'dotenv/config';
 import TodoModelPersistence from '../model/todo.model.persistence';
 
 export default class TodoRepositoryPersistence {
-    #URL = process.env.JSONSERVER_URL
+    #URL = process.env.SRVURL
 
     getAllTodos = async () : Promise<TodoModelPersistence[]> => { 
         return axios.get(`${this.#URL}`).then(res => res.data);

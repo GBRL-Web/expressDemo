@@ -1,10 +1,14 @@
 export default class TodoModelPersistence {
-    id!: number
-    task: string
-    completed: boolean
-    
-        constructor(task: string = "") {
-            this.task = task;
-            this.completed = false;
+    id!: number;
+    task!: string;
+    completed!: boolean;
+  
+    constructor(...data: TodoModelPersistence[]) {
+        const keys = Object.keys(new TodoModelPersistence());
+        for (const key of keys) {
+          if (data.hasOwnProperty(key)) {
+            this[key] = data[key];
+          }
         }
-}
+    }
+  }

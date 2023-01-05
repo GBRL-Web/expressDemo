@@ -35,7 +35,7 @@ export default class TodoController {
   };
 
   createNew = async (req: Request, res: Response): Promise<void> => {
-    const todo = await this.service.createTodo(req.body.task);
+    const todo = await this.service.createTodo(req.body);
     res.send(todo);
   };
 

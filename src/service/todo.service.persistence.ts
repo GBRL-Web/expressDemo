@@ -1,4 +1,3 @@
-import TodoModel from "../model/todo.model";
 import TodoRepositoryPersistence from "../repository/todo.repository.persistence";
 import TodoModelPersistence from "../model/todo.model.persistence";
 
@@ -22,7 +21,7 @@ export default class TodoServicePersistence {
     return `Repo deleted successfully.`;
   };
 
-  createTodo = (task: string) => {
+  createTodo = (task: TodoModelPersistence) => {
     const todoNew = new TodoModelPersistence(task);
     console.log(todoNew);
     this.#repo.createTodo(todoNew);
