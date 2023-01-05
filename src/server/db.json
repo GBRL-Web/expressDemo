@@ -1,0 +1,29 @@
+{
+  "todo": [
+    {
+      "id": 1,
+      "task": "NU!",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "task": "Task 3",
+      "completed": false
+    },
+    {
+      "id": 5,
+      "task": "Task 5",
+      "completed": false
+    },
+    {
+      "task": "New task",
+      "completed": false,
+      "id": 6
+    },
+    {
+      "task": "New task",
+      "completed": false,
+      "id": 7
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 import express from 'express'
 import TodoController from '../controller/todo.controller';
-import TodoRepository from '../repository/todo.repository';
-import TodoService from '../service/todo.service';
+import TodoRepositoryPersistence from '../repository/todo.repository.persistence';
+import TodoServicePersistence from '../service/todo.service.persistence';
 
 
-const repo = new TodoRepository();
-const service = new TodoService(repo);
+const repo = new TodoRepositoryPersistence();
+const service = new TodoServicePersistence(repo);
 const controller = new TodoController(service);
 
 const router = express.Router();

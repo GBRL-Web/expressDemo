@@ -1,59 +1,64 @@
 import { Request, Response } from "express";
-import TodoService from "../service/todo.service";
-import TodoModel from "../model/todo.model";
+import TodoServicePersistence from "../service/todo.service.persistence";
+import TodoModelPersistence from "../model/todo.model.persistence";
 
 export default class TodoController {
-  service: TodoService;
+  service: TodoServicePersistence;
 
-  constructor(service: TodoService) {
+  constructor(service: TodoServicePersistence) {
     this.service = service;
   }
 
-  getAll = (req: Request, res: Response): void => {
-    res.send(this.service.getAll());
+  getAll = async (req: Request, res: Response): Promise<void> => {
+    const todos = await this.service.getAll();
+    res.send(todos);
   };
-  getById = (req: Request, res: Response): void => {
+
+  getById = async (req: Request, res: Response): Promise<void> => {
     const id: number = parseInt(req.params.id);
-    const todo: TodoModel = this.service.getById(id)!;
+    const todo: TodoModelPersistence = await this.service.getById(id);
     if (todo) {
       res.send(todo);
     } else {
       res.send("ToDo entry non-existent!");
     }
   };
-  deleteById = (req: Request, res: Response): void => {
+
+  deleteById = async (req: Request, res: Response): Promise<void> => {
     const id: number = parseInt(req.params.id);
-    const todo: TodoModel = this.service.getById(id);
+    const todo: TodoModelPersistence = await this.service.getById(id);
     if (todo) {
-      res.send(this.service.deleteById(id));
+      res.send(this.service.deleteTodo(id));
     } else {
       res.send(`ToDo entry can not be deleted. It is non-existent.`);
     }
   };
-  createNew = (req: Request, res: Response): void => {
-    const todo = new TodoModel(req.body.text);
-    this.service.createNew(todo);
-    res.sendStatus(200);
+
+  createNew = async (req: Request, res: Response): Promise<void> => {
+    const todo = await this.service.createTodo(req.body.task);
+    res.send(todo);
   };
-  editTodo = (req: Request, res: Response): void => {
+
+  editTodo = async (req: Request, res: Response): Promise<void> => {
     const index: number = parseInt(req.params.id);
-    let newMod: TodoModel = new TodoModel(req.body.task);
-    newMod.id = index;
-    newMod.completed = req.body.completed;
-    if (this.service.getById(index)) {
-      this.service.editTodo(index, newMod);
+    let newTask = req.body;
+    const service = await this.service.getById(index);
+    if (service) {
+      this.service.patchTodo(index, newTask);
       res.send('Edited successfully!')
     } else {
-      this.service.createNew(newMod);
+      this.service.createTodo(newTask.task);
       res.sendStatus(200);
     }
-   }
-   editTodoPatched = (req: Request, res: Response): void => { 
+   };
+
+   editTodoPatched = async (req: Request, res: Response): Promise<void> => { 
     const index: number = parseInt(req.params.id);
+    const service = await this.service.getById(index);
     const body = req.body;
-    let todo : TodoModel;
-    if (this.service.getById(index)) {
-      todo = this.service.getById(index);
+    let todo : TodoModelPersistence;
+    if (service) {
+      todo = await this.service.getById(index);
     } else {
       throw new Error('No such entry found!');
     }
@@ -70,7 +75,7 @@ export default class TodoController {
       todo.completed = todo.completed;
       console.log('No completed found.')
     }
-    this.service.editTodo(index, todo);
+    this.service.patchTodo(index, todo);
     res.sendStatus(200);
    }
 }
